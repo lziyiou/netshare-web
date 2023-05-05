@@ -58,7 +58,7 @@ const handleMove = (row) => {
   
   oldFolderId.value = row.parentId;
   userFileId.value = row.userFileId;
-  title.value = "您要移动的文件为：" + row.filename
+  title.value = "要移动的文件为：" + row.filename
 
   // 打开对话框
   MoveDialog.visible = true;

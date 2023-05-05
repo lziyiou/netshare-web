@@ -61,8 +61,15 @@
   <!-- 图片展示区 -->
   <el-image-viewer @close="closeImgViewer" :url-list="imageList" v-if="showImageViewer" :initial-index="initialIndex" />
   <!-- 视频展示区 -->
-  <el-dialog v-model="videoDialogVisible" width="auto" destroy-on-close :title="videoTitle" align-center center>
+  <el-dialog v-model="videoDialogVisible" width="auto" destroy-on-close :title="showTitle" align-center center>
     <video ref="videoRef" controls width="720" height="480"></video>
+    <template #footer>
+      <span class="dialog-footer"> </span>
+    </template>
+  </el-dialog>
+  <!-- 音频展示区 -->
+  <el-dialog v-model="musicDialogVisible" width="auto" destroy-on-close :title="showTitle" align-center center>
+    <audio ref="musicRef" controls autoplay :src="musicUrl"></audio>
     <template #footer>
       <span class="dialog-footer"> </span>
     </template>
@@ -249,11 +256,17 @@ const tableRowClassName = ({ row, rowIndex }) => {
 // 视频块显示
 const videoDialogVisible = ref(false);
 const videoRef = ref();
-const videoTitle = ref("");
 
 const filepath = computed(() => {
   return route.query.filepath ? route.query.filepath : "/"
 })
+
+// 音频显示块
+const musicDialogVisible = ref(false);
+const musicUrl = ref()
+
+// 展示区公用块
+const showTitle = ref("");
 
 // 行点击事件
 async function handleRow(row) {
@@ -289,7 +302,7 @@ async function handleRow(row) {
     }
   } else if (calculateFiletype(row.extendName) === "视频") {
     videoDialogVisible.value = true;
-    videoTitle.value = row.filename;
+    showTitle.value = row.filename;
 
     const videoUrl =
       "/api/video/" +
@@ -300,6 +313,11 @@ async function handleRow(row) {
     await nextTick();
     var player = dashjs.MediaPlayer().create();
     player.initialize(videoRef.value, videoUrl, true);
+  } else if (calculateFiletype(row.extendName) === "音频") {
+    musicDialogVisible.value = true;
+    showTitle.value = row.filename;
+
+    musicUrl.value = "/api/music/" + row.userFileId
   }
 }
 

@@ -87,7 +87,7 @@ function submitForm() {
 if (store.getters.isLogin) {
   // 用户若已登录，自动跳转到首页
   ElMessage({
-    message: '您已登录！已跳转到首页',
+    message: '已登录！已跳转到首页',
     type: 'success',
     duration: 1000
   })

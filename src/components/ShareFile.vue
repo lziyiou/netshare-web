@@ -1,54 +1,20 @@
 <template>
   <!-- 对话框 - 分享文件 -->
   <el-dialog v-model="ShareDialog.visible" :title="title" width="32%">
-    <el-row
-      style="margin-bottom: 20px"
-      align="middle"
-      justify="center"
-      v-if="!result"
-    >
-      <el-col :span="6"
-        ><el-text tag="b" size="large">选择有效期</el-text>
+    <el-row style="margin-bottom: 20px" align="middle" justify="center" v-if="!result">
+      <el-col :span="6"><el-text tag="b" size="large">选择有效期</el-text>
       </el-col>
-      <el-col :span="10"
-        ><el-select
-          v-model="expirationSelect.exp"
-          class="m-2"
-          placeholder="Select"
-          size="large"
-        >
-          <el-option
-            v-for="item in expirationSelect.options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          /> </el-select
-      ></el-col>
+      <el-col :span="10"><el-select v-model="expirationSelect.exp" class="m-2" placeholder="Select" size="large">
+          <el-option v-for="item in expirationSelect.options" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select></el-col>
     </el-row>
 
-    <el-row
-      style="margin-bottom: 20px"
-      align="middle"
-      justify="center"
-      v-if="!result"
-    >
-      <el-col :span="6"
-        ><el-text tag="b" size="large">分享形式</el-text>
+    <el-row style="margin-bottom: 20px" align="middle" justify="center" v-if="!result">
+      <el-col :span="6"><el-text tag="b" size="large">分享形式</el-text>
       </el-col>
-      <el-col :span="10"
-        ><el-select
-          v-model="shareForm.form"
-          class="m-2"
-          placeholder="Select"
-          size="large"
-        >
-          <el-option
-            v-for="item in shareForm.options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          /> </el-select
-      ></el-col>
+      <el-col :span="10"><el-select v-model="shareForm.form" class="m-2" placeholder="Select" size="large">
+          <el-option v-for="item in shareForm.options" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select></el-col>
     </el-row>
 
     <el-row style="margin-bottom: 20px" v-if="result">
@@ -58,25 +24,20 @@
     </el-row>
     <el-row style="margin-bottom: 20px" v-if="result">
       <el-col>
-        <el-input readonly v-model="link" >
-            <template #suffix>
-                <el-icon @click="copyLink"><CopyDocument /></el-icon>
-            </template>
+        <el-input readonly v-model="link">
+          <template #suffix>
+            <el-icon @click="copyLink">
+              <CopyDocument />
+            </el-icon>
+          </template>
         </el-input>
       </el-col>
     </el-row>
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="ShareDialog.visible = false" v-if="!result"
-          >取消</el-button
-        >
-        <el-button
-          v-if="!result"
-          type="primary"
-          @click="handleShareSubmit"
-          :loading="ShareDialog.loading"
-        >
+        <el-button @click="ShareDialog.visible = false" v-if="!result">取消</el-button>
+        <el-button v-if="!result" type="primary" @click="handleShareSubmit" :loading="ShareDialog.loading">
           创建分享
         </el-button>
         <el-button v-if="result" type="primary" @click="copyLink">
@@ -87,7 +48,7 @@
   </el-dialog>
 </template>
   
-  <script setup lang="ts">
+<script setup lang="ts">
 import { ElMessage } from "element-plus";
 import { computed, reactive, ref } from "vue";
 import { getDirTree, moveFile } from "../request/file";
@@ -125,12 +86,12 @@ const expirationSelect = reactive({
 });
 
 const shareForm = reactive({
-  form: 0,
+  form: 1,
   options: [
-    {
-      value: 0,
-      label: "私密链接",
-    },
+    // {
+    //   value: 0,
+    //   label: "私密链接",
+    // },
     {
       value: 1,
       label: "公开链接",
@@ -140,7 +101,7 @@ const shareForm = reactive({
 
 // 处理分享事件
 const handleShare = (row) => {
-  title.value = "您要分享的文件为：" + row.filename;
+  title.value = "要分享的文件为：" + row.filename;
   userFileId.value = row.userFileId;
   // 打开对话框
   ShareDialog.visible = true;
