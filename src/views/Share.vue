@@ -13,7 +13,7 @@
           <br>
           <el-text class="mx-1" size="large">{{ shareUser.username }}</el-text>
           <el-divider />
-          此分享 <el-text class="mx-1" size="large" type="warning">{{ remainder }}</el-text> 内有效，请尽快保存
+          此分享 <el-text class="mx-1" size="large" type="warning">{{ remainder }}</el-text> <el-text class="mx-1" v-if="remainder !== '永久有效'">内有效，请尽快保存</el-text>
       </el-card>
     </el-aside>
     <el-container>

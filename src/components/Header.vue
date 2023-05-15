@@ -32,7 +32,8 @@
                 <el-table-column prop="status" label="状态">
                     <template #default="scope">
                         <el-text class="w-100px" truncated>
-                            <el-text class="mx-1" size="large" type="warning">{{ scope.row.status }}</el-text> 后过期</el-text>
+                            <el-text class="mx-1" size="large" type="warning">{{ scope.row.status }}</el-text> <el-text class="mx-1" v-if="scope.row.status !== '永久有效'">后过期</el-text>
+                        </el-text>
                     </template>
                 </el-table-column>
             </el-table>

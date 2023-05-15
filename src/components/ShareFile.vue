@@ -1,6 +1,6 @@
 <template>
   <!-- 对话框 - 分享文件 -->
-  <el-dialog v-model="ShareDialog.visible" :title="title" width="32%">
+  <el-dialog v-model="ShareDialog.visible" :title="title" width="32%" @close="result=false">
     <el-row style="margin-bottom: 20px" align="middle" justify="center" v-if="!result">
       <el-col :span="6"><el-text tag="b" size="large">选择有效期</el-text>
       </el-col>
